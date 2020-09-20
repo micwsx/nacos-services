@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.12:8488
+server:
+  port: 8000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
