@@ -1,7 +1,6 @@
 package com.micwsx.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,7 @@ public class ProductController {
     @Autowired
     public ServerProperties serverProperties;
 
-    @Value("${redis.username}")
+//    @Value("${redis.username}")
     private String redisUsername;
 
     // http://192.168.1.12:9000/product/redis

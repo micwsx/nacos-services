@@ -13,9 +13,25 @@ public class TestController {
     private ProductService productService;
 
     @GetMapping("/test/sayhello")
-    public String say(){
-        return productService.sayHello();
+    public String sayHello(String name){
+        return productService.sayHello(name);
     }
+
+    @GetMapping("/test/saybye")
+    public String saybye(String name){
+        return productService.sayBye(name);
+    }
+
+    @GetMapping("/test/sayHelloException")
+    public String sayHelloException(String name){
+        return productService.sayHelloException(name);
+    }
+    @GetMapping("/test/sayByeException")
+    public String sayByeException(String name){
+        return productService.sayByeException(name);
+    }
+
+
     // http://192.168.1.12:9000/log
     // 这种写法可以被直接添加到资源下
     @GetMapping("/log")
