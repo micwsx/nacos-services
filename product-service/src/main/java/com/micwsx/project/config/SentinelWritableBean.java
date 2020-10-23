@@ -1,4 +1,4 @@
-package com.micwsx.project.conifg;
+package com.micwsx.project.config;
 
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
@@ -14,13 +14,15 @@ import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Properties;
 
-@Component
+/**
+ * 初始化时注册sentinel中流控规则FlowRule写对象-持久化规则到nacos中数据库中
+ */
+//@Component
 public class SentinelWritableBean {
 
     @Autowired

@@ -1,13 +1,9 @@
 spring:
-  application:
-    name: product-service
   cloud:
     nacos:
-      discovery:
-        server-addr: 192.168.1.5:8488
       config:
-        server-addr: 192.168.1.5:8488
+        server-addr: 192.168.1.20:8488
         prefix: mydataid
-        file-extension: properties
+        file-extension: yml
 #  profiles:
 #    active: dev

@@ -1,0 +1,4 @@
+1.openfeign方式调用服务
+2.微服务如何暴露服务，且能保证单独业务执行。
+3.服务的安全调用问题（服务调用时携带token）。
+4.分布式事务框架seata安装使用(官方新人文档地址：http://seata.io/zh-cn/docs/ops/deploy-guide-beginner.html)，或者下载seata后读readme.md文件配置

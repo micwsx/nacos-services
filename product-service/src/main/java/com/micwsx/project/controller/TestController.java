@@ -1,6 +1,6 @@
 package com.micwsx.project.controller;
 
-import com.micwsx.project.service.ProductService;
+import com.micwsx.project.service.ProductServiceTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,25 +10,25 @@ public class TestController {
 
     // 使用了@SentinelResource注解，监控接口
     @Autowired
-    private ProductService productService;
+    private ProductServiceTest productServiceTest;
 
     @GetMapping("/test/sayhello")
     public String sayHello(String name){
-        return productService.sayHello(name);
+        return productServiceTest.sayHello(name);
     }
 
     @GetMapping("/test/saybye")
     public String saybye(String name){
-        return productService.sayBye(name);
+        return productServiceTest.sayBye(name);
     }
 
     @GetMapping("/test/sayHelloException")
     public String sayHelloException(String name){
-        return productService.sayHelloException(name);
+        return productServiceTest.sayHelloException(name);
     }
     @GetMapping("/test/sayByeException")
     public String sayByeException(String name){
-        return productService.sayByeException(name);
+        return productServiceTest.sayByeException(name);
     }
 
 

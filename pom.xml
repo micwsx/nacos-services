@@ -13,6 +13,9 @@
         <module>order-service</module>
         <module>gateway</module>
         <module>authorize</module>
+        <module>store-application</module>
+        <module>store-model</module>
+        <module>stock-service</module>
     </modules>
 
     <name>nacos-services</name>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body style="text-align: center">
+
+<h2>Welcome Store!</h2>
+
+<table style="border: 1px solid black;">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Introduction</td>
+        <td>Total Price</td>
+        <td>Created</td>
+        <td>Details</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item,state:${orders}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.introduction}"></td>
+        <td th:text="${item.total_price}"></td>
+        <td th:text="${item.createdTime}"></td>
+        <td th:text="${#lists.size(item.orderDetails)}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<table>
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>ProductName</td>
+        <td>Price</td>
+        <td>Content</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item,state:${products}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.productName}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.content}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

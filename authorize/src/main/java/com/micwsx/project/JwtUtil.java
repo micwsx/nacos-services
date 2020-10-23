@@ -3,6 +3,8 @@ package com.micwsx.project;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.text.DateFormat;
@@ -11,11 +13,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * jwt工具类，颁发token和验证token
  */
 public class JwtUtil {
+
     public static final String SECRET = "qazwsx123444$#%#()*&& asdaswwi1235 ?;!@#kmmmpom in***xx**&";
     public static final String TOKEN_PREFIX = "Bearer";
     public static final String HEADER_AUTH = "authorization";
@@ -55,7 +61,7 @@ public class JwtUtil {
                     .getBody();
             String userId = String.valueOf(tokenBody.get(HEADER_USERID));
             tokenMap.put(HEADER_USERID, userId);
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             e.printStackTrace();
         }
         return tokenMap;
@@ -79,15 +85,37 @@ public class JwtUtil {
         //判断传入的userid和token是否匹配
         String userIdOri = tokenResultMap.get(HEADER_USERID);
         if (!userIdIn.equals(userIdOri)) {
-            return new HashMap<String,String>();
+            return new HashMap<String, String>();
         }
         return tokenResultMap;
     }
 
     public static void main(String[] args) {
-        String accessToken = generateToken("10001");
-        System.out.println(accessToken);
-        Map<String, String> map = validateToken(accessToken);
-        System.out.println(map);
+
+        Logger logger = LoggerFactory.getLogger("logger");
+//        String accessToken = generateToken("10001");
+//        System.out.println(accessToken);
+//        Map<String, String> map = validateToken(accessToken);
+//        System.out.println(map);
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 30, TimeUnit.SECONDS, new SynchronousQueue<>());
+
+        try {
+            for (int i = 1; i < 55; i++) {
+                int val = i;
+                threadPoolExecutor.execute(() -> {
+                    try {
+                        logger.info("PoolSize:" + threadPoolExecutor.getPoolSize() + " [" + Thread.currentThread().getName() + "]打印" + val);
+                        TimeUnit.MICROSECONDS.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } finally {
+            threadPoolExecutor.shutdown();
+        }
+
+
     }
 }

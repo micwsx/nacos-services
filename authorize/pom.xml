@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cookie-authorize</artifactId>
+    <artifactId>authorize</artifactId>
 
-    <name>cookie-authorize</name>
+    <name>authorize</name>
     <url>http://www.example.com</url>
 
     <properties>

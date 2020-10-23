@@ -1,14 +1,110 @@
 server:
   port: 9000
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include:  '*'
+management:
+  endpoints:
+    web:
+      exposure:
+        include:  '*'
 spring:
   cloud:
     sentinel:
       transport:
-        dashboard: localhost:8080
+        dashboard: localhost:8080 #sentinel控制台地址
         port: 8719
       eager: true
+    nacos:
+      discovery:
+        server-addr: 192.168.1.20:8488
+  application:
+    name: product-service
+# 数据源配置存放到nacos中DataId为mydataid
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=true
+#    driver-class-name: com.mysql.jdbc.Driver
+#    username: root
+#    password: p@ssw0rd
+
+#logging:
+#  level:
+#    root: TRACE
+#    com.micwsx.cloud.dao: TRACE
+#    org.springframework.jdbc.core.JdbcTemplate: TRACE
+seata:
+  enabled: true
+  application-id: product-service-applicationID
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  data-source-proxy-mode: AT
+  use-jdk-proxy: false
+  excludes-for-auto-proxying: firstClassNameForExclude,secondClassNameForExclude
+  client:
+    rm:
+      async-commit-buffer-limit: 1000
+      report-retry-count: 5
+      table-meta-check-enable: false
+      report-success-enable: false
+      saga-branch-register-enable: false
+      saga-json-parser: fastjson
+      lock:
+        retry-interval: 10
+        retry-times: 30
+        retry-policy-branch-rollback-on-conflict: true
+    tm:
+      commit-retry-count: 5
+      rollback-retry-count: 5
+      default-global-transaction-timeout: 60000
+      degrade-check: false
+      degrade-check-period: 2000
+      degrade-check-allow-times: 10
+    undo:
+      data-validation: true
+      log-serialization: jackson
+      log-table: undo_log
+      only-care-update-columns: true
+    log:
+      exceptionRate: 100
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
+    enable-degrade: false
+    disable-global-transaction: false
+  transport:
+    shutdown:
+      wait: 3
+    thread-factory:
+      boss-thread-prefix: NettyBoss
+      worker-thread-prefix: NettyServerNIOWorker
+      server-executor-thread-prefix: NettyServerBizHandler
+      share-boss-worker: false
+      client-selector-thread-prefix: NettyClientSelector
+      client-selector-thread-size: 1
+      client-worker-thread-prefix: NettyClientWorkerThread
+      worker-thread-size: default
+      boss-thread-size: 1
+    type: TCP
+    server: NIO
+    heartbeat: true
+    serialization: seata
+    compressor: none
+    enable-client-batch-send-request: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: 192.168.1.20:8488
+      group: SEATA_GROUP
+      username: ""
+      password: ""
+  registry:
+    type: nacos
+    load-balance: RandomLoadBalance
+    load-balance-virtual-nodes: 10
+    nacos:
+      application: seata-server
+      server-addr: 192.168.1.20:8488
+      group: "SEATA_GROUP"
+      namespace:
+      username: ""
+      password: ""

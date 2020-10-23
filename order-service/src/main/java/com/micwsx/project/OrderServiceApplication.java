@@ -1,5 +1,6 @@
 package com.micwsx.project;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -13,9 +14,11 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@MapperScan("com.micwsx.project.dao")
 public class OrderServiceApplication
 {
 
+    // 使用ribbon
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate(){
