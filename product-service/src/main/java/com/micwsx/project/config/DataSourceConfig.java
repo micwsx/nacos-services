@@ -2,12 +2,20 @@ package com.micwsx.project.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
+import io.seata.rm.datasource.DataSourceProxy;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
@@ -16,29 +24,31 @@ import java.sql.SQLException;
  * 需要添加数据源配置类，能及时更新nacos配置属性。
  */
 @Configuration
-@RefreshScope
+@MapperScan("com.micwsx.project.dao")
 public class DataSourceConfig {
 
-    @Value("${spring.datasource.url}")
-    private String url;
-
-    @Value("${spring.datasource.driver-class-name}")
-    private String driverClassName;
-
-    @Value("${spring.datasource.username}")
-    private String username;
-
-    @Value("${spring.datasource.password}")
-    private String password;
+//    // 来源于nacos中自定义数据源db
+//    @Value("${db.url}")
+//    private String url;
+//    // 来源于nacos中自定义数据源db
+//    @Value("${db.driver-class-name}")
+//    private String driverClassName;
+//    // 来源于nacos中自定义数据源db
+//    @Value("${db.username}")
+//    private String username;
+//    // 来源于nacos中自定义数据源db
+//    @Value("${db.password}")
+//    private String password;
 
     @Bean(initMethod = "init")
     @RefreshScope
-    public DruidDataSource dataSource() throws SQLException {
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource dataSource() throws SQLException {
         DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setUrl(url);
-        druidDataSource.setDriverClassName(driverClassName);
-        druidDataSource.setUsername(username);
-        druidDataSource.setPassword(password);
+//        druidDataSource.setUrl(url);
+//        druidDataSource.setDriverClassName(driverClassName);
+//        druidDataSource.setUsername(username);
+//        druidDataSource.setPassword(password);
         // 配置初始化大小、最小、最大
         druidDataSource.setInitialSize(10);
         druidDataSource.setMinIdle(1);
@@ -57,6 +67,20 @@ public class DataSourceConfig {
         // 拦截配置
         druidDataSource.setFilters("stat,wall");
         return druidDataSource;
+    }
+
+//    @Bean
+//    public DataSourceProxy dataSourceProxy(DataSource dataSource) {
+//        return new DataSourceProxy(dataSource);
+//    }
+
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTransactionFactory(new SpringManagedTransactionFactory());
+        return sqlSessionFactoryBean.getObject();
     }
 
     @Bean

@@ -1,17 +1,32 @@
-server:
-  port: 9100
-#nacos配置公共属性
-#db:
-#  url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=true
-#  driver-class-name: com.mysql.jdbc.Driver
-#  username: root
-#  password: p@ssw0rd
 #spring:
-#  cloud:
-#    alibaba:
-#      seata:
-#        tx-service-group: my_test_tx_group
-logging:
-  level:
-    io:
-     seata: debug
+#  datasource:
+#    url: jdbc:mysql://192.168.1.111:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#    driverClassName: com.mysql.jdbc.Driver
+#    username: root
+#    password: p@ssw0rd
+#seata:
+#  enabled: true
+#  tx-service-group: my_test_tx_group
+#  enable-auto-data-source-proxy: true
+#  use-jdk-proxy: false
+#  config:
+#    type: nacos
+#    nacos:
+#      namespace:
+#      serverAddr: 192.168.1.14:8488
+#      group: SEATA_GROUP
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server
+#      server-addr: 192.168.1.14:8488
+#      namespace:
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:  '*'
+#logging:
+#  level:
+#    io:
+#      seata: debug

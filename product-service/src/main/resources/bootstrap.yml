@@ -1,9 +1,20 @@
 spring:
+  application:
+    name: product-service
   cloud:
     nacos:
+      discovery:
+        server-addr: 192.168.1.14:8488
       config:
-        server-addr: 192.168.1.20:8488
-        prefix: mydataid
+        server-addr: 192.168.1.14:8488
+        prefix: common
         file-extension: yml
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #sentinel控制台地址
+        port: 8719
+      eager: true
+server:
+  port: 9000
 #  profiles:
 #    active: dev

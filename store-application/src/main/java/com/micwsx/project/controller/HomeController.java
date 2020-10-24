@@ -93,14 +93,14 @@ public class HomeController {
             return d.getQuantity() * d.getPrice();
         }));
         order.setTotal_price(totalPrice);
-        // 创建订单order
+        // 创建订单order-执行插入数据库操作
         Integer integer = restTemplate.postForObject("http://order-service/order/make", order, Integer.class);
         // 查商品库存
         StockProduct stockProduct = new StockProduct(2, productId);
         stockProduct = restTemplate.postForObject("http://stock-service/stock/get", stockProduct, StockProduct.class);
         // 扣减库存2号
         stockProduct.setQuantity(stockProduct.getQuantity() - quantity);
-        // 更新库存
+        // 更新库存-执行修改数据库操作
         Integer count = restTemplate.postForObject("http://stock-service/stock/update", stockProduct, Integer.class);
         return "下单成功";
     }

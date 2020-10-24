@@ -1,11 +1,15 @@
 spring:
+  application:
+    name: stock-service
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.1.20
+        server-addr: 192.168.1.14:8488
       config:
-        server-addr: 192.168.1.20
+        server-addr: 192.168.1.14:8488
         prefix: common
         file-extension: yml
-  application:
-    name: stock-service
+server:
+  port: 9100
+#  profiles:
+#    active: dev
