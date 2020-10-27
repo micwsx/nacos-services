@@ -8,11 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="gateway" />
         <module name="product-service" />
-        <module name="order-service" />
         <module name="authorize" />
-        <module name="product-api" />
-        <module name="stock-service" />
         <module name="store-model" />
+        <module name="product-api" />
+        <module name="order-service" />
+        <module name="stock-service" />
         <module name="store-application" />
       </profile>
     </annotationProcessing>
